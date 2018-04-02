@@ -1,0 +1,12 @@
+/* line 1, ../scss/_button.scss */
+button {
+  border-radius: 50px !important;
+}
+
+/* line 1, ../scss/_base.scss */
+body {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
