@@ -1,0 +1,10 @@
+ul.errorlist{
+  list-style: none;
+  background-color: lighten($danger, 40%);
+  color: $danger;
+  padding: 10px 0 !important;
+  padding-left: 20px !important;
+
+  border-left: 2px solid $danger;
+
+}

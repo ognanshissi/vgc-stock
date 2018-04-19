@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'analytics',
+    'account',
+    'lens',
+    'mount'
 ]
 
 MIDDLEWARE = [
@@ -77,8 +82,15 @@ WSGI_APPLICATION = 'management.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'vgc_stock',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
@@ -101,11 +113,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-FR'
 
 TIME_ZONE = 'UTC'
 
@@ -114,7 +125,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -134,7 +144,6 @@ MEDIA_URL = '/media/'
 # Media root
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_cdn')
 
-
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'localhost'  # 'smtp.gmail.com'
@@ -142,4 +151,11 @@ EMAIL_HOST_USER = 'bazieambroise@gmail.com'
 # EMAIL_HOST_PASSWORD = '2508!'
 EMAIL_PORT = 1025  # 587
 # EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'ambroisebazie@gmail.com'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_URL = '/account/login/'
+LOGOUT_REDIRECT_URL = LOGIN_URL
+# AUTH_USER_MODEL = 'account.User'
+LOGIN_REDIRECT_URL = '/'
+
+PRODUCT_LESS_VALUE = 100

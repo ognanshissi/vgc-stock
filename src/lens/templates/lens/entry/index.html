@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Tableau de bord | {{ block.super }}  {% endblock %}
+{% block javascripts %}
+{{ block.super }}
+
+<script>
+    $(document).ready(function() {
+          $('#bootstrap-data-table-export').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+            }
+        });
+        } );
+</script>
+{% endblock javascripts %}
+
+{% block content %}
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Tableau de bord</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Entrées</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Liste des entrées de lentilles</strong>
+                <div class="pull-right" >
+                    <span>Filtrer par type de lentille: </span>
+                    <form action="" style="display: inline-block" method="get">
+                        <select onchange="this.form.submit()" name="lens_type" id="" class="form-control">
+                            <option {% if request.GET.lens_type == 'tous' %}selected{% endif %} value="tous">Tous</option>
+                            {% for type in type_list %}
+                            <option {% if request.GET.lens_type == type %} selected {% endif %} value="{{type}}">{{type}}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if request.GET.lens_type %} {{all_stock.count}} {% endif %}
+                <table id="bootstrap-data-table" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Reference</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Sphere</th>
+                        <th scope="col">Cylindre</th>
+                        <th scope="col">Axe</th>
+                        <th scope="col">Addition</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Date d'entré</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stock in object_list %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{stock.product.reference}}</td>
+                        <td>{{stock.product.type.name}}</td>
+                        <td>{{stock.product.sphere_text}}</td>
+                        <td>{{stock.product.cylindre_text}}</td>
+                        <td>{{stock.product.axis}}</td>
+                        <td>{{stock.addition}}</td>
+                        <td>{{stock.qty}}</td>
+                        <td>{{stock.entry_date}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,80 @@
+{% extends 'base.html'  %}
+
+{% load staticfiles %}
+{% block stylesheets %} 
+  {{ block.super }}
+  <style>
+   body{
+       background-color: #000;
+   }
+  </style>
+{% endblock %}
+
+{% block body %}
+        <div class="sufee-login d-flex align-content-center flex-wrap">
+            <div class="container">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <h2>VGC STOCKS</h2>
+                    </div>
+                    <div class="login-form">
+                        <form action="{% url 'account:login' %}" class="needs-validation" method="post" novalidate>
+
+                            {{ form.non_field_errors }}
+
+                            {% csrf_token %}
+                            <div class="form-group {% if form.username.errors %}has-error{% endif %}">
+                                <label>{{ form.username.label_tag }}</label>
+                                {{ form.username }}
+                                <!--<input type="text" required name="username" class="form-control" placeholder="Nom d'utilisateur">-->
+                                {{ form.username.errors }} <!-- for backend validation  -->
+                                <div class="invalid-feedback">
+                                    Le nom d'utilisateur est obligatoire
+                                </div>
+
+                            </div>
+
+                            <div class="form-group {% if form.password.errors %}has-error{% endif %}">
+                                <label>{{ form.password.label_tag }}</label>
+                                <input type="password" required name="password" class="form-control" placeholder="Password">
+                                {{ form.password.errors }}
+                                <div class="invalid-feedback">
+                                    Le mot de passe est obligatoire
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label class="pull-right">
+                                    <a href="#" style="color: #1769ff">Mot de passe oublié?</a>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Se connecter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ block.super }}
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+{% endblock %}

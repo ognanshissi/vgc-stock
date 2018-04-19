@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Tableau de bord | {{ block.super }}  {% endblock %}
+{% block javascripts %}
+{{ block.super }}
+
+<script>
+    $(document).ready(function () {
+        $('#bootstrap-data-table-export').DataTable();
+    });
+</script>
+{% endblock javascripts %}
+
+{% block content %}
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Stock</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+    <div class="col-lg-12">
+        <h2 class="card-title">Liste de lentille dans le stock</h2>
+        <div class="card">
+            <div class="card-header">
+                <div class="">
+                    <h4>Filtrer par:</h4>
+                    <hr>
+                    <form action="" method="get">
+                        <div class="form-row">
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label for="type">Type</label>
+                                <select onchange="this.form.submit()" name="lens_type" id="type" class="form-control">
+                                    <option {% if request.GET.lens_type == 'tous' %}selected{% endif %} value="tous">Tous</option>
+                                    {% for type in type_list %}
+                                    <option {% if request.GET.lens_type == type %}selected{% endif %} value="{{type}}">
+                                        {{type}}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <!--<div class="form-group col-sm-12 col-md-2">-->
+                                <!--<label for="sphere">Sphere</label>-->
+                                <!--<select onchange="this.form.submit()" class="form-control" name="sphere" id="sphere">-->
+                                    <!--<option {% if request.GET.sphere == 'tous' %}selected{% endif %} value="tous">Tous</option>-->
+                                    <!--{% for s in sphere_list %}-->
+                                    <!--<option {% if request.GET.sphere == s.sphere %}selected{% endif %} value="{{ s.sphere }}">{{ s.sphere }}</option>-->
+                                    <!--{% endfor %}-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="form-group col-sm-12 col-md-2">-->
+                                <!--<label for="cylindre">cylindre</label>-->
+                                <!--<select onchange="this.form.submit()" class="form-control" name="cylindre" id="cylindre">-->
+                                    <!--<option {% if request.GET.cylindre == 'tous' %}selected{% endif %}  value="tous">Tous</option>-->
+                                    <!--{% for c in cylindre_list %}-->
+                                    <!--<option {% if request.GET.cylindre == c.cylindre %}selected{% endif %} value="{{ c.cylindre }}">{{ c.cylindre }}</option>-->
+                                    <!--{% endfor %}-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <!--{% if request.GET.lens_type %} {{all_stock.count}} {% endif %}-->
+                {% if all_stock %}
+                <table id="bootstrap-data-table" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Reference</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Sphere</th>
+                        <th scope="col">Cylindre</th>
+                        <th scope="col">Axe</th>
+                        <th scope="col">Addition</th>
+                        <th scope="col">Quantité</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stock in all_stock %}
+                    <tr {% if stock.qty < 20 %} style="background-color: rgba(185, 74, 72, .3);" {% endif %}>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{stock.product.reference}}</td>
+                    <td>{{stock.product.type.name}}</td>
+                    <td>{{stock.product.sphere_text}}</td>
+                    <td>{{stock.product.cylindre_text}}</td>
+                    <td>{{stock.product.axe}}</td>
+                    <td>{{stock.addition}}</td>
+                    <td>{{stock.qty}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <ul class="errorlist">
+                    <li>
+                        Il ya aucun resultat
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

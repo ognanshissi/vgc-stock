@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Tableau de bord | {{ block.super }}  {% endblock %}
+{% block javascripts %}
+{{ block.super }}
+
+{% endblock javascripts %}
+
+{% block content %}
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Tableau de bord</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Ajouter une entré de lentille</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content mt-3">
+    <div class="col-lg-12">
+
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header"><strong>Lentille</strong>
+                    <small>ajout de nouvelle entrée de marchandise</small>
+                </div>
+                <div class="card-body card-block">
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {% include 'lens/snippets/form-template.html' %}
+                        <div class="form-row">
+                            <button class="btn btn-primary" type="submit">Ajouter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

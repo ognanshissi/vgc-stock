@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Tableau de bord | {{ block.super }}  {% endblock %}
+{% block javascripts %}
+{{ block.super }}
+{% endblock javascripts %}
+
+{% block content %}
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Tableau de bord</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Type</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Liste des types de lentille dans le stock</strong>
+                <div class="pull-right">
+                    <a href="{% url 'lens:types-create' %}" class="btn btn-primary" title="ajouter un type">Ajouter un type</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table  class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Libelé</th>
+                        <th scope="col">Code</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for type in object_list %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{type.name}}</td>
+                        <td>{{type.code}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
